@@ -1,34 +1,33 @@
 import copy
 with open('input.txt') as f:
-  numerki = f.readlines()
-numerki=numerki[0].split(",")
+  numbers = f.readlines()
+numbers=numbers[0].split(",")
 
-dlugosc=len(numerki)
-for x, every in enumerate(numerki):
-  every=int(every)
-  numerki[x]=every
-#print(max(numerki))
-fuel_list=[]
+#dlugosc=len(numbers)
+#changing elemnt in list for countable numbers
+for z, every in enumerate(numbers):
+    numbers[z]=int(every)
 
-for x in range(0,max(numerki)):
-  
-  fuel=0
-  for every in numerki:
-    odleglosc=0
-    if every>x:
-      dead=1
-      for y in range (x,every):
-        odleglosc+=dead
-        dead+=1
+fuel_list=[] #made list which will "remember" all the fuel expenses, for every possible rout
+
+for standing in range(0,max(numbers)): #standing is my courent position
+
+  fuel=0 #how much fuel I will use to move crabs to actual position(aka "standing")
+  for every in numbers: #numerating by numbers/all the crabs positions
+    distance=0#how much fuel I will use to move one crab to actual position(aka "standing")
+    actual_cost=1 #actual cost of moving one more number towards "standing"
+    if every>standing: #checking if the number is highter or lower than "standing"
+        for y in range (standing,every):
+            distance+=actual_cost
+            actual_cost+=1
     else:
-      dead=1
-      for y in range (every,x):
-        odleglosc+=dead
-        dead+=1
-    fuel+=odleglosc
-  fuel_list.append(fuel) 
+        for y in range (every,standing):
+            distance+=actual_cost
+            actual_cost+=1
+    fuel+=distance
+  fuel_list.append(fuel)
 
 
-wynik=min(fuel_list)
-print(wynik)
+solution=min(fuel_list)
+print(solution)
 f.close()
