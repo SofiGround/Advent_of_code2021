@@ -1,4 +1,7 @@
-import copy
+#Code is solution to Advent of code 2021, day 7 part 2
+#https://adventofcode.com/2021/day/7 part two adds change:
+#Instead, each change of 1 step in horizontal position costs 1 more unit of
+#fuel than the last: the first step costs 1, the second step costs 2 ect.
 with open('input.txt') as f:
   numbers = f.readlines()
 numbers=numbers[0].split(",")
@@ -8,27 +11,38 @@ numbers=numbers[0].split(",")
 for z, every in enumerate(numbers):
     numbers[z]=int(every)
 
+#made list which will "remember" all the fuel expenses, for every possible road
+fuel_list=[] 
 
-fuel_list=[] #made list which will "remember" all the fuel expenses, for every possible road
+#standing is my courent position
+for standing in range(0,max(numbers)): 
 
-for standing in range(0,max(numbers)): #standing is my courent position
-
-  fuel=0 #how much fuel I will use to move crabs to actual position(aka "standing")
-  for every in numbers: #numerating by numbers/all the crabs positions
-    distance=0#how much fuel I will use to move one crab to actual position(aka "standing")
-    actual_cost=1 #actual cost of moving one more number towards "standing"
-    if every>standing: #checking if the number is highter or lower than "standing"
-        for y in range (standing,every): #counting fuel expenses of moving one crab
+  #how much fuel I will use to move crabs to actual position(aka "standing")
+  fuel=0 
+  
+  #numerating by numbers/all the crabs positions
+  for every in numbers: 
+  
+    #how much fuel I will use to move one crab to actual position(aka "standing")
+    distance=0
+    
+    #actual cost of moving one more number towards "standing"
+    actual_cost=1
+    
+    #checking if the number is highter or lower than "standing" and 
+    #counting fuel expenses of moving one crab
+    if every>standing: 
+        for y in range (standing,every): 
             distance+=actual_cost
             actual_cost+=1
     else:
-        for y in range (every,standing): #counting fuel expenses of moving one crab
+        for y in range (every,standing): 
             distance+=actual_cost
             actual_cost+=1
     fuel+=distance
   fuel_list.append(fuel)
 
-
-solution=min(fuel_list) #the least expensive option will cost "solution"
+#the least expensive option is the answer
+solution=min(fuel_list) 
 print(solution)
 f.close()
