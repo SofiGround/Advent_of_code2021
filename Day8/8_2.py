@@ -1,8 +1,8 @@
-#The code represents answer to Day 6th part to Advent of code challenge.
-#The code will decrypt line by line incrypted numbers and
+#The code represents answer to Day 8th part to Advent of code challenge.
+#The code will decrypt line by line incrypted numbers.
 #More about how the numbers are incrypted at:
 #https://adventofcode.com/2021/day/8
-#The part two twist is to decrypt all the numbers past "|" and add them
+#The part two twist is to decrypt all the numbers past "|" and add them.
 
 with open('input.txt') as f:
   lines= f.readlines()
