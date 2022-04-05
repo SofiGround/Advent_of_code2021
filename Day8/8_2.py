@@ -1,106 +1,137 @@
-with open('input.txt') as f:
-  linie = f.readlines()
+#The code represents answer to Day 6th part to Advent of code challenge.
+#The code will decrypt line by line incrypted numbers and
+#More about how the numbers are incrypted at:
+#https://adventofcode.com/2021/day/8
+#The part two twist is to decrypt all the numbers past "|" and add them
 
-for x, every in enumerate(linie):
+with open('input.txt') as f:
+  lines= f.readlines()
+
+#This loop will change a text to list of lines to make it easier to work with
+for x, every in enumerate(lines):
   every=every.replace("\n","")
   every=every.replace("|"," ")
-
   every=every.replace("  ","")
   every=every.replace(" ",",")
+  lines[x]=every
 
-  linie[x]=every
 
+#Loop will check every line of text, change it to long stings of characters
+#representing every number and decrypt it.
+for y, z in enumerate(lines):
+  single_line_list=z.split(",")
 
-#print(linie)
-for y,every in enumerate(linie):
-  lista=every.split(",")
+  #For every linie every number is incrypted differently.
+  #Seven three, remebering combination will help
+  #with decrypting three later.
+  #Four will "use" the same leeters as five and some of two, the combination
+  #will help with decrypting those numbers later.
   seven=[]
   four=[]
-  #print(four)
-  #print(lista)
-  for x,each in enumerate(lista):
+
+  for x,each in enumerate(single_line_list):
+
+    #Some of numbers are uniqly incripted (we know that from reading challenge
+    #description). Those numbers are: 7,4,1 and 8.
+    #We are taking care of decrypting them first.
     if len(each)==3:
+
       seven=list(each)
-      lista[x]="7"
-      #print(seven)
+      single_line_list[x]="7"
+
     if len(each)==4:
-      #print("aha")
+
       four=list(each)
-      lista[x]="4"
+      single_line_list[x]="4"
 
     if len(each)==2:
-      lista[x]="1"
+
+      single_line_list[x]="1"
+
     if len(each)==7:
-      lista[x]="8"
+
+      single_line_list[x]="8"
+
+
+    #Some of numbers will be incripted with the same number of letters,
+    #in this case the number of letters is five.
     if len(each)==5:
-      count=0
-      for pomoc in seven:
-    
-        ile = sum(1 if char in seven else 0 for char in each)
-        if ile==3:
-          lista[x]="3"
+
+      #If the sting is made form the same characters as seven then it's 3.
+      for l in seven:
+
+        k = sum(1 if char in seven else 0 for char in each)
+        if k==3:
+          single_line_list[x]="3"
           each="3"
-          #print(lista)
-          #print(pomoc)
-        #ile = 0
-        #for char in each:
-        #  if char in seven:
-        #    ile += 1
 
-        #print(seven, each, ile)
-        
-      for pomoc in four:
-        
-        bro = sum(1 if char in four else 0 for char in each)
-        if bro==3:
-          lista[x]="5"
+      #If the sting is made of three of the characters of four then it's 5.
+      for l in four:
+
+        k = sum(1 if char in four else 0 for char in each)
+        if k==3:
+          single_line_list[x]="5"
           each="5"
-          #print(lista)
-        #print(four, each, bro)
-      for pomoc in four:
-        
-        ile = sum(1 if char in four else 0 for char in each)
-        if ile==2:
-          lista[x]="2"
+      #If the sting is made of tow of the characters of four then it's 2.
+      for l in four:
+
+        k = sum(1 if char in four else 0 for char in each)
+        if k==2:
+          single_line_list[x]="2"
           each="2"
-      
 
 
 
+    #Some of numbers will be incripted with the same number of letters,
+    #in this case the number of letters is six.
     if len(each)==6:
-      for pomoc in four:
-    
-        ile = sum(1 if char in four else 0 for char in each)
-        if ile==4:
-          lista[x]="9"
+
+      for l in four:
+        #If the sting is made of four of the characters of four then it's 9.
+        k = sum(1 if char in four else 0 for char in each)
+        if k==4:
+          single_line_list[x]="9"
           each="9"
-      for pomoc in seven:
-    
-        ile = sum(1 if char in seven else 0 for char in each)
-        if ile==3:
-          lista[x]="0"
+
+      for l in seven:
+        #If the sting is made of three of the characters of seven then it's 0.
+        k = sum(1 if char in seven else 0 for char in each)
+        if k==3:
+          single_line_list[x]="0"
           each="0"
-      for pomoc in four:
-        ile = sum(1 if char in four else 0 for char in each)
-        if ile==3:
-          lista[x]="6"
+
+      for l in four:
+        #If the sting is made of three of the characters of four then it's 6.
+        k = sum(1 if char in four else 0 for char in each)
+        if k==3:
+          single_line_list[x]="6"
           each="6"
-    linie[y]=lista
-#print(linie)
-for y,every in enumerate(linie):
-  linie[y] = list(filter(None, linie[y]))
-wynik=[]
-for k, w in enumerate(linie):
-  linie[k]=w[-4:]   
-  values = ','.join(str(v) for v in linie[k])
-  wynik.append(values)
-suma=0
-for x, each in enumerate(wynik):
-  each=each.replace(",","")   
+
+    #Changing list of string lines to numerical lines, line by line.
+    lines[y]=single_line_list
+
+
+
+#Making chageable list of numbers
+for y,z in enumerate(lines):
+  lines[y] = list(filter(None, lines[y]))
+
+#We have interest in only numbers after "|", we can observe from challenge
+#description that they are always made of four digits.
+numbers=[]
+for k, w in enumerate(lines):
+  lines[k]=w[-4:]
+  values = ','.join(str(v) for v in lines[k])
+  numbers.append(values)
+#solution is the sum of the 4 digit numbers in numbers list
+solution=0
+
+for x, each in enumerate(numbers):
+  each=each.replace(",","")
   each=int(each)
-  wynik[x]=each
-  suma+=each
+  numbers[x]=each
+  solution+=each
 
 
-print(suma)
+print(solution)
 f.close()
