@@ -5,13 +5,6 @@
 #smaller number, the lowest position can't be 9.
 #The code than will sum up all the small positions on the board
 
-#The code contain the answer to Advent of code Day 9th part 1 challenge
-#More about the challenge https://adventofcode.com/2021/day/9
-#Code will check and find the lowest positions on the board of numbers.
-#The lowest position means that the number is not surranded by any
-#smaller number, the lowest position can't be 9.
-#The code than will sum up all the small positions on the board
-
 #changing a string board to int board(coutability of it will be usefull later)
 with open('input.txt') as f:
   board = f.readlines()
